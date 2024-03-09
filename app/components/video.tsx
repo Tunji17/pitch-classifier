@@ -1,9 +1,11 @@
 import { useState, useRef } from "react";
+import { PitchGraph } from "./plot-pitch";
 
 export const VideoRecorder = () => {
     const [permission, setPermission] = useState(false);
     const [stream, setStream] = useState<any>(null);
     const [mimeType, setMimeType] = useState("video/webm");
+    const [audioBlob, setAudioBlob] = useState<any>("");
 
     const mediaRecorder: MediaStream | {
         current: MediaRecorder | {
@@ -61,6 +63,8 @@ export const VideoRecorder = () => {
     };
 
     const mimeTypes = ["video/webm", "video/webm; codecs=vp9", "video/mp4"];
+
+
 
     const startRecording = async (mimeIndex = 0) => {
         setRecordingStatus("recording");

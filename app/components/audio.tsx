@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { PitchGraph } from "./plot-pitch";
 
 export const AudioRecorder = () => {
     const [permission, setPermission] = useState(false);
@@ -20,6 +21,7 @@ export const AudioRecorder = () => {
     });
     const [recordingStatus, setRecordingStatus] = useState("inactive");
     const [audioChunks, setAudioChunks] = useState([]);
+    const [audioBlob, setAudioBlob] = useState<any>("");
     const [audio, setAudio] = useState("");
 
     const getMicrophonePermission = async () => {
@@ -48,14 +50,11 @@ export const AudioRecorder = () => {
 
             const mimeType = mimeTypes[mimeIndex];
             MediaRecorder.isTypeSupported(mimeType);
-            setMimeType(mimeType);
-
             console.log("mimeType", mimeType);
-
+            
+            setMimeType(mimeType);
             //create new Media recorder instance using the stream
             const media: MediaRecorder = new MediaRecorder(stream, { mimeType });
-
-            console.log("media", media);
 
             //set the MediaRecorder instance to the mediaRecorder ref
             mediaRecorder.current = media;
@@ -63,10 +62,14 @@ export const AudioRecorder = () => {
             mediaRecorder.current.start();
             let localAudioChunks: any = [];
             mediaRecorder.current.ondataavailable = (event) => {
-            if (typeof event.data === "undefined") return;
-            if (event.data.size === 0) return;
-            localAudioChunks.push(event.data);
+                if (typeof event.data === "undefined") return;
+                if (event.data.size === 0) return;
+                localAudioChunks.push(event.data);
+                console.log("localAudioChunks", localAudioChunks);
+
+
             };
+
             setAudioChunks(localAudioChunks);
         } catch (err: any) {
             console.log("Error recording", err.message);
@@ -88,6 +91,9 @@ export const AudioRecorder = () => {
         mediaRecorder.current.onstop = () => {
           //creates a blob file from the audiochunks data
            const audioBlob = new Blob(audioChunks, { type: mimeType });
+           console.log("audioBlob", audioBlob);
+           setAudioBlob(audioBlob);
+           
           //creates a playable URL from the blob file.
            const audioUrl = URL.createObjectURL(audioBlob);
            setAudio(audioUrl);
@@ -116,6 +122,11 @@ export const AudioRecorder = () => {
                         Stop Recording
                     </button>
                     ) : null}
+                    {
+                        audioBlob ? (
+                            <PitchGraph audioBlob={audioBlob} />
+                        ) : null
+                    }
                     {audio ? (
                         <div className="audio-container">
                             <audio src={audio} controls></audio>
