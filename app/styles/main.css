@@ -12,7 +12,7 @@ body {
 }
 
 body {
-  --fg: black;
+  --fg: rgb(12, 10, 10);
   --bg: white;
   --remix: #2f77d1;
 
@@ -192,74 +192,27 @@ main {
   }
 }
 
-.illustration circle {
-  opacity: 0;
-  animation: scale 0.5s ease forwards;
+.audio-player,
+.video-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.illustration circle[data-index='0'] {
-  animation-delay: 0.1s;
+.audio-controls,
+.video-controls {
+    margin-bottom: 20px;
 }
 
-.illustration circle[data-index='1'] {
-  animation-delay: 0.2s;
+.audio-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
-.illustration circle[data-index='2'] {
-  animation-delay: 0.3s;
-}
-
-.illustration circle[data-index='3'] {
-  animation-delay: 0.4s;
-}
-
-.illustration circle[data-index='4'] {
-  animation-delay: 0.5s;
-}
-
-.orbit {
-  opacity: 0;
-  animation: scale 1s ease forwards;
-}
-
-.orbit[data-index='0'] {
-  animation-delay: 0.5s;
-}
-
-.orbit[data-index='1'] {
-  animation-delay: 0.6s;
-}
-
-.orbit[data-index='2'] {
-  animation-delay: 0.25s;
-}
-
-.orbit[data-index='3'] {
-  animation-delay: 0.3s;
-}
-
-.orbit[data-index='4'] {
-  animation-delay: 0.6s;
-}
-
-.illustration .orbits {
-  transform-origin: center center;
-}
-
-.illustration .orbits > g {
-  animation: spin 60s linear both infinite;
-}
-
-.illustration .orbits > g:nth-child(2) {
-  animation-duration: 80s;
-}
-
-.illustration .orbits > g:nth-child(3) {
-  animation-duration: 100s;
-}
-
-.illustration .orbits > g:nth-child(4) {
-  animation-duration: 120s;
+.btn-margin {
+    margin: 10px;
 }
 
 /* footer */

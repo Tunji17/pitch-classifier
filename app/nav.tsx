@@ -2,10 +2,8 @@ import { motion } from 'framer-motion';
 import { NavLink, useLocation } from '@remix-run/react';
 
 const SECTION_DATA = [
-  { label: 'Edge (Streaming)', href: '/', x: '100%' },
-  { label: 'Edge', href: '/edge', x: '62%' },
-  { label: 'Node.js (Streaming)', href: '/node-streaming', x: '38%' },
-  { label: 'Node.js', href: '/node', x: '0%' },
+  { label: 'Audio', href: '/', x: '100%' },
+  { label: 'Video', href: '/video', x: '62%' },
 ];
 
 export default function NavigationSwitcher() {
@@ -78,10 +76,6 @@ export default function NavigationSwitcher() {
         <div aria-hidden className="nav-stroke" />
         <div className="nav-switcher">{buttons}</div>
       </nav>
-      <p className="note">
-        Note: This demo simulates a slow database or backend connection to
-        demonstrate streaming.
-      </p>
     </>
   );
 }

@@ -1,7 +1,8 @@
-import { defer } from '@vercel/remix';
 import type { LoaderArgs } from '@vercel/remix';
+
 import { parseVercelId } from '~/parse-vercel-id';
-import { AudioRecorder } from '~/components/audio';
+import { VideoRecorder } from '~/components/video';
+
 
 export const config = { runtime: 'edge' };
 
@@ -14,16 +15,11 @@ export async function loader({ request }: LoaderArgs) {
 
   const parsedId = parseVercelId(request.headers.get("x-vercel-id"));
 
-  return defer({
+  return {
+    ...parsedId,
     isCold: wasCold,
-    proxyRegion: sleep(parsedId.proxyRegion, 1000),
-    computeRegion: sleep(parsedId.computeRegion, 1500),
     date: new Date().toISOString(),
-  });
-}
-
-function sleep(val: any, ms: number) {
-  return new Promise((resolve) => setTimeout(() => resolve(val), ms));
+  };
 }
 
 export function headers() {
@@ -35,7 +31,7 @@ export function headers() {
 export default function App() {
   return (
     <main>
-      <AudioRecorder />
+      <VideoRecorder />
     </main>
   );
 }
